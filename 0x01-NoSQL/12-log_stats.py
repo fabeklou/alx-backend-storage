@@ -27,7 +27,9 @@ def get_stats(logs_collection):
     puts = logs_collection.count_documents({'method': 'PUT'})
     patchs = logs_collection.count_documents({'method': 'PATCH'})
     deletes = logs_collection.count_documents({'method': 'DELETE'})
-    status_check = logs_collection.count_documents({'path': '/status'})
+    status_check = logs_collection.count_documents(
+        {'path': '/status', 'method': 'GET'}
+    )
 
     methods_counts = [('GET', gets), ('POST', posts),
                       ('PUT', puts), ('PATCH', patchs),
@@ -37,7 +39,7 @@ def get_stats(logs_collection):
 
     print("Methods:")
     for method, count in methods_counts:
-        print("    method {}: {}".format(method, count))
+        print("\tmethod {}: {}".format(method, count))
 
     print("{} status check".format(status_check))
 
