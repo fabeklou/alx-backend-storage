@@ -5,7 +5,7 @@ This module provides functions to retrieve and display
 log statistics from a MongoDB collection.
 
 Author: Komlanvi Fabrice Eklou
-Date: 2024-06-16
+Date: 2024-06-17
 """
 
 
@@ -44,12 +44,15 @@ def get_stats(logs_collection):
     print("{} status check".format(status_check))
 
     #  Log stats - new version
+
     aggregate_pipline = [
         {"$group": {"_id": "$ip", "request_count": {"$sum": 1}}},
         {"$sort": {"request_count": -1}},
         {"$limit": 10}
     ]
     top_ips = logs_collection.aggregate(aggregate_pipline)
+
+    print("IPs:")
 
     for top_ip in top_ips:
         print("\t{}: {}".format(
