@@ -11,6 +11,7 @@ from typing import Callable
 import functools
 
 redis_client = redis.Redis()
+redis_client.flushdb()
 
 
 def cache_page(method: Callable) -> Callable:
