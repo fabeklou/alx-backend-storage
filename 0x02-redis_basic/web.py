@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 """
-This module provides a caching mechanism for web pages using Redis.
+This module provides a caching mechanism
+for web pages using Redis.
 """
-
 
 import requests
 import redis
@@ -11,7 +11,6 @@ from typing import Callable
 import functools
 
 redis_client = redis.Redis()
-redis_client.flushdb()
 
 
 def cache_page(method: Callable) -> Callable:
@@ -31,8 +30,8 @@ def cache_page(method: Callable) -> Callable:
     @functools.wraps(method)
     def wrapper(url: str) -> str:
         """
-        Wrapper function that caches the page content and counts
-        the number of accesses.
+        Wrapper function that caches the page
+        content and counts the number of accesses.
 
         Args:
             url (str): The URL of the page to fetch.
