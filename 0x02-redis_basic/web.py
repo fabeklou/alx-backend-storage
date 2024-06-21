@@ -11,6 +11,7 @@ from typing import Callable
 import functools
 
 redis_client = redis.Redis()
+redis_client.flushdb()
 
 
 def cache_page(method: Callable) -> Callable:
@@ -39,6 +40,7 @@ def cache_page(method: Callable) -> Callable:
         Returns:
             str: The content of the page.
         """
+
         # Generate cache key and count key
         cache_key = "cache:{}".format(url)
         count_key = "count:{}".format(url)
@@ -58,6 +60,7 @@ def cache_page(method: Callable) -> Callable:
         redis_client.setex(cache_key, 10, content)
 
         return content
+
     return wrapper
 
 
@@ -72,5 +75,5 @@ def get_page(url: str) -> str:
     Returns:
         str: The content of the web page as a string.
     """
-    response  = requests.get(url)
+    response = requests.get(url)
     return response.text
