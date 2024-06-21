@@ -42,8 +42,8 @@ def cache_page(method: Callable) -> Callable:
         """
 
         # Generate cache key and count key
-        cache_key = "cache:{}".format(url)
-        count_key = "count:{}".format(url)
+        cache_key = f"cache:{url}"
+        count_key = f"count:{url}"
 
         # Increment the access count
         redis_client.incr(count_key)
