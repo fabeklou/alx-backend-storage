@@ -19,14 +19,15 @@ get_page(URL)
 print(redis_client.get(count_key))
 print(redis_client.get(cache_key))
 
+time.sleep(12)
+
+print(redis_client.get(count_key))
+print(redis_client.get(cache_key))
+
+for _ in range(10):
+    get_page(URL)
+    print(redis_client.get(count_key))
+    
 get_page(URL)
-print(redis_client.get(count_key))
-print(redis_client.get(cache_key))
-
-time.sleep(10)
-
-print(redis_client.get(count_key))
-print(redis_client.get(cache_key))
-
 print(redis_client.get(count_key))
 print(redis_client.get(cache_key))
