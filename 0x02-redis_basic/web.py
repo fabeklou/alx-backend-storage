@@ -43,8 +43,12 @@ def cache_page(method: Callable) -> Callable:
         cache_key = "cache:{}".format(url)
         count_key = "count:{}".format(url)
 
+        # Increment the access count
+        redis_client.incr(count_key)
+
         # Check if the content is already cached
         cached_content = redis_client.get(cache_key)
+
         if cached_content:
             return cached_content.decode('utf-8')
 
@@ -52,8 +56,6 @@ def cache_page(method: Callable) -> Callable:
         content = method(url)
         # Cache the content with expiration time of 10 seconds
         redis_client.setex(cache_key, 10, content)
-        # Increment the access count
-        redis_client.incr(count_key)
 
         return content
     return wrapper
@@ -70,5 +72,5 @@ def get_page(url: str) -> str:
     Returns:
         str: The content of the web page as a string.
     """
-    response = requests.get(url)
+    response  = requests.get(url)
     return response.text
